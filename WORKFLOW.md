@@ -31,3 +31,23 @@ Round 1 took ~2 minutes to generate and looked done at a glance — that's the t
 ## Bottom line
 
 Round 2 took longer to prompt (writing the constraints) but roughly the same total time once round 1's review and rework is counted. The real cost of the vague prompt wasn't generation time, it was the accessibility and edge-case bugs that a quick glance wouldn't catch.
+
+## Post-implementation bug: CSS specificity conflict
+
+After styling with Tailwind CSS v4, all input fields rendered flat — no padding, no height, no visual depth — despite `px-4 py-3` classes being applied and confirmed in the compiled CSS output.
+
+**Root cause:** The Vite scaffold template ships with a manual universal reset in `index.css`:
+
+```css
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;  /* overrides Tailwind utility classes on every element */
+}
+```
+
+Because this rule appeared **after** `@import "tailwindcss"`, it outweighed every `.py-3` and `.px-4` utility class in the cascade. Tailwind generated the rules correctly — they were visible in the compiled CSS — but the universal selector reset silently won specificity.
+
+The fix: remove the manual reset from `index.css` and let Tailwind v4's built-in **Preflight** (which it already imports) handle cross-browser normalization. Also cleared `App.css` of all legacy Vite template styles.
+
+**Lesson:** When scaffolding a project, immediately delete or inspect the template CSS before adding utility-class styling. An AI generating Tailwind classes won't flag template-level conflicts — it has no visibility into the cascade at runtime.
