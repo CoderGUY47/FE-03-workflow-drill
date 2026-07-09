@@ -23,3 +23,17 @@
    successful submit.** "Write it, then write tests and run them" is not
    optional — round 1 in this drill would have passed casual review with a
    whitespace-only name accepted as valid.
+
+5. **When adding Tailwind CSS v4 to a Vite scaffold, immediately clear
+   `App.css` and remove any manual universal reset from `index.css`.**
+   Vite templates include `*, *::before, *::after { padding: 0; margin: 0 }`
+   after the Tailwind import, which outranks every utility class at runtime
+   because of source order. Tailwind Preflight already handles cross-browser
+   normalization — duplicate resets silently break all spacing utilities.
+   Verify inputs render with visible padding before writing any more CSS.
+
+6. **Always reference the Tailwind version in the prompt when asking for
+   CSS.** Tailwind v3 and v4 have different import syntax, config files, and
+   utility availability. An AI will default to v3 patterns (`tailwind.config.js`,
+   `@apply`) unless told otherwise, which will silently produce a non-working
+   setup in a v4 project that uses `@import "tailwindcss"` and the Vite plugin.
