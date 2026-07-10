@@ -1,75 +1,38 @@
-# React + TypeScript + Vite
+# FE-03 — AI-Assisted Workflow Drill
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Track:** Frontend AI Engineering · **Week:** 2 · **Phase:** Foundations · **Workload:** 4h
 
-Currently, two official plugins are available:
+## What this is
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+A settings form (name, email, optional password change, notifications toggle) built **twice** to make the difference between vague and precise AI prompting visible in real code.
 
-## React Compiler
+## Branches
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Branch | Prompt style | Output |
+|---|---|---|
+| [`workflow-drill/round1-vague`](../../tree/workflow-drill/round1-vague) | Single vague prompt — accepted as-is | `SettingsForm.jsx` — plain JS, `alert()` errors, no labels, no tests |
+| [`workflow-drill/round2-precise`](../../tree/workflow-drill/round2-precise) | File-referenced, constrained, plan→code→test loop | `SettingsForm.tsx` — TypeScript, Zod schema, full aria-*, 5 Vitest tests passing |
 
-## Expanding the ESLint configuration
+## Key files
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| File | Purpose |
+|---|---|
+| [`WORKFLOW.md`](./WORKFLOW.md) | 500-word diff analysis: correctness, accessibility, edge cases, review effort |
+| [`CLAUDE.md`](./CLAUDE.md) | 6 project rules learned from this drill |
+| [`src/components/settings/SettingsForm.tsx`](./src/components/settings/SettingsForm.tsx) | Round 2 form — precise prompt output |
+| [`src/components/settings/SettingsForm.jsx`](./src/components/settings/SettingsForm.jsx) | Round 1 form — vague prompt output |
+| [`src/components/settings/SettingsForm.test.tsx`](./src/components/settings/SettingsForm.test.tsx) | Vitest + RTL tests (5/5 passing) |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Running locally
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run test     # vitest — 5 tests
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Biggest finding
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+> Round 1 silently generated a `.jsx` file in a TypeScript project, accepted whitespace-only inputs as valid, used `alert()` for errors, and had no accessible labels. None of this was obvious at a glance — it looked finished. That's the trap.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+See [`WORKFLOW.md`](./WORKFLOW.md) for the full analysis.
