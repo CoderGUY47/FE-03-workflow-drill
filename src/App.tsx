@@ -28,26 +28,6 @@ function App() {
 
       {/* Content */}
       <div className="relative z-10 w-full max-w-[520px] flex flex-col items-center gap-8">
-
-        {/* Badge */}
-        <div className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-purple-500/40 bg-purple-500/10 text-purple-300 text-xs font-semibold tracking-widest uppercase">
-          <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
-          FE-03 · Week 2 · AI Workflow Drill
-        </div>
-
-        {/* Headline */}
-        <div className="text-center space-y-3">
-          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
-            Account{' '}
-            <span className="bg-gradient-to-r from-purple-400 via-violet-300 to-indigo-400 bg-clip-text text-transparent">
-              Settings
-            </span>
-          </h1>
-          <p className="text-slate-400 text-sm font-light max-w-xs mx-auto leading-relaxed">
-            Round 2 — Precise prompting, Zod validation &amp; full screen-reader accessibility.
-          </p>
-        </div>
-
         {/* Form card */}
         <div className="relative group w-full">
           {/* Glow ring */}

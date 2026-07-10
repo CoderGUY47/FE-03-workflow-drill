@@ -2,6 +2,8 @@
 
 **Track:** Frontend AI Engineering · **Week:** 2 · **Phase:** Foundations · **Workload:** 4h
 
+![Settings Form Preview](./public/preview.png)
+
 ## What this is
 
 A settings form (name, email, optional password change, notifications toggle) built **twice** to make the difference between vague and precise AI prompting visible in real code.
